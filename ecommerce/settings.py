@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^dr9b16fw4b)qb1j6zv23$sup=e-2t%x-@e0#3qk0!wzr%9ot^"
+SECRET_KEY = (
+    "django-insecure-^dr9b16fw4b)qb1j6zv23$sup=e-2t%x-@e0#3qk0!wzr%9ot^"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +41,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local applications
     "ecommerce.dashboard",
+    "ecommerce.inventory",
+    "ecommerce.demo",
+    # External applications
+    "mptt",
 ]
 
 MIDDLEWARE = [
@@ -111,7 +117,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
