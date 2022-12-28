@@ -17,6 +17,9 @@ At this point the file is proper json, however not formatted for django. To form
 ### Setup
 Chromedriver is needed for unit tests. Download for your specific version of Google Chrome at https://chromedriver.chromium.org/downloads
 
+Start virtual enviroment
+`source venv/bin/activate`
+
 To get test database\
 `python3 manage.py load-fixtures`
 

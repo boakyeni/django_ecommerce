@@ -18,3 +18,5 @@ geckodriver
 # Exclude machine-specific vs code settings
 .vscode/*
 .vscode/settings.json
+
+.lib/
