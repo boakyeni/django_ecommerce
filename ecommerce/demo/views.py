@@ -1,3 +1,5 @@
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.db.models import Count
 from django.shortcuts import render
 from ecommerce.inventory import models
 
@@ -34,16 +36,54 @@ def product_detail(request, slug):
         for value in request.GET.values():
             filter_arguments.append(value)
 
-    data = (
+        data = (
+            models.ProductInventory.objects.filter(product__slug=slug)
+            .filter(attribute_values__attribute_value__in=filter_arguments)
+            .annotate(num_tags=Count("attribute_values"))
+            .filter(num_tags=len(filter_arguments))
+            .values(
+                "id",
+                "sku",
+                "product__name",
+                "store_price",
+                "product_inventory__units",
+            )
+            .annotate(field_a=ArrayAgg("attribute_values__attribute_value"))
+            .get()
+        )
+    else:
+
+        data = (
+            models.ProductInventory.objects.filter(product__slug=slug)
+            .filter(is_default=True)
+            .values(
+                "id",
+                "sku",
+                "product__name",
+                "store_price",
+                "product_inventory__units",
+            )
+            .annotate(field_a=ArrayAgg("attribute_values__attribute_value"))
+            .get()
+        )
+
+    y = (
         models.ProductInventory.objects.filter(product__slug=slug)
-        .filter(is_default=True)
+        .distinct()
         .values(
-            "id",
-            "sku",
-            "product__name",
-            "store_price",
-            "product_inventory__units",
+            "attribute_values__product_attribute__name",
+            "attribute_values__attribute_value",
         )
     )
 
-    return render(request, "product_detail.html", {"data": data})
+    z = (
+        models.ProductTypeAttribute.objects.filter(
+            product_type__product_type__product__slug=slug
+        )
+        .values("product_attribute__name")
+        .distinct()
+    )
+
+    return render(
+        request, "product_detail.html", {"data": data, "y": y, "z": z}
+    )
