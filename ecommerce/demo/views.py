@@ -80,8 +80,8 @@ def product_detail(request, slug):
         models.ProductTypeAttribute.objects.filter(
             product_type__product_type__product__slug=slug
         )
-        .values("product_attribute__name")
         .distinct()
+        .values("product_attribute__name")
     )
 
     return render(

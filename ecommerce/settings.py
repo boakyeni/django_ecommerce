@@ -42,9 +42,12 @@ INSTALLED_APPS = [
     # Local applications
     "ecommerce.dashboard",
     "ecommerce.inventory",
+    "ecommerce.drf",
     "ecommerce.demo",
     # External applications
     "mptt",
+    "rest_framework",
+    # "django_elasticsearch_dsl",
 ]
 
 MIDDLEWARE = [
@@ -139,3 +142,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ELASTICSEARCH_DSL = {"default": {"hosts": "localhost:9200"}}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}

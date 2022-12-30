@@ -4,6 +4,7 @@
     <ul>
         <li>{{ data.product__name }}</li>
         <li>{{ data.sku }}</li>
+        <li>Price: ${{data.store_price}}</li>
         <li>{{ data.product_inventory__units }}</li>
     </ul>
     <ul>
@@ -16,7 +17,7 @@
                             {% if a.attribute_values__attribute_value in data.field_a %}
                                 <li>
                                     <div id="target-{{ a.attribute_values__attribute_value }}"
-                                         class="selected fw-bold"
+                                         class="selected fw-bold btn btn-primary"
                                          data-attribute="{{ x.product_attribute__name }}"
                                          value="{{ a.attribute_values__attribute_value }}">
                                         {{ a.attribute_values__attribute_value }}
@@ -25,6 +26,7 @@
                             {% else %}
                                 <li>
                                     <div id="target-{{ a.attribute_values__attribute_value }}"
+                                         class="btn btn-link"
                                          data-attribute="{{ x.product_attribute__name }}"
                                          value="{{ a.attribute_values__attribute_value }}">
                                         {{ a.attribute_values__attribute_value }}
@@ -54,14 +56,13 @@
             }
             e++
         }
-        document.addEventListener('click', function(e){
-            let value = e.target.getAttribute('value')
-            d[e.target.getAttribute('data-attribute')] = e.target.getAttribute('value')
-            let queryString = buildUrlWithParams(d)
-            let url = window.location.href.split('?')[0]
-            window.location.href = url + "?" + queryString
-
-        }, false)
+        $('[id^=target]').click(function () {
+            const value = this.getAttribute('value');
+            d[this.getAttribute('data-attribute')] = this.getAttribute('value')
+            const querystring = buildUrlWithParams(d)
+            const url = window.location.href.split('?')[0]
+            window.location.href = url + "?" + querystring;
+        });
         function buildUrlWithParams(data){
             var searchParams = [];
             for (var d in data){
