@@ -55,32 +55,23 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=True)
-
     class Meta:
         model = Product
-        fields = ["web_id", "slug", "name", "description", "category"]
+        fields = ["name"]
         read_only = True
         editable = False
 
 
 class ProductInventorySerializer(serializers.ModelSerializer):
-    brand = BrandSerializer(many=False, read_only=True)
-    attribute = ProductAttributeValueSerializer(
-        source="attribute_values", many=True
-    )
-    image = MediaSerializer(source="media_product_inventory", many=True)
+    product = ProductSerializer(many=False, read_only=True)
 
     class Meta:
         model = ProductInventory
         fields = [
+            "id",
             "sku",
-            "image",
             "store_price",
             "is_default",
             "product",
-            "product_type",
-            "brand",
-            "attribute",
         ]
         read_only = True

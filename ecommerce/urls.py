@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from elasticsearch_dsl import Search
 from rest_framework import routers
 
 from ecommerce.drf import views
+from ecommerce.search.views import SearchProductInventory
 
 router = routers.DefaultRouter()
 router.register(r"api", views.AllProductViewset, basename="allproducts")
@@ -26,9 +28,15 @@ router.register(
     views.ProductInventoryViewset,
     basename="products",
 )
+router.register(
+    r"category/(?P<slug>[^/.]+)",
+    views.ProductByCategory,
+    basename="productbycategory",
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("demo/", include("ecommerce.demo.urls", namespace="demo")),
     path("", include(router.urls)),
+    path("search/<str:query>/", SearchProductInventory.as_view()),
 ]
