@@ -39,4 +39,5 @@ urlpatterns = [
     path("demo/", include("ecommerce.demo.urls", namespace="demo")),
     path("", include(router.urls)),
     path("search/<str:query>/", SearchProductInventory.as_view()),
+    path("ninja/", include("ecommerce.dninja.urls")),
 ]

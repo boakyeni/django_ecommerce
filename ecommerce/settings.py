@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     "ecommerce.drf",
     "ecommerce.demo",
     "ecommerce.search",
+    "ecommerce.dninja",
     # External applications
     "mptt",
     "rest_framework",
     "django_elasticsearch_dsl",
+    "ninja",
 ]
 
 MIDDLEWARE = [

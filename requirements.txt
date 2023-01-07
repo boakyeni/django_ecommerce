@@ -11,6 +11,7 @@ Django==4.1.4
 django-elasticsearch-dsl==7.2.2
 django-js-asset==2.0.0
 django-mptt==0.14.0
+django-ninja==0.20.0
 djangorestframework==3.14.0
 djlint==1.19.10
 EditorConfig==0.12.3
@@ -36,6 +37,7 @@ platformdirs==2.6.0
 pluggy==1.0.0
 psycopg2-binary==2.9.2
 py==1.11.0
+pydantic==1.10.4
 PySocks==1.7.1
 pytest==6.2.5
 pytest-base-url==2.0.0
