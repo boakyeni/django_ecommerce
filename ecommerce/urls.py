@@ -19,6 +19,11 @@ from elasticsearch_dsl import Search
 from rest_framework import routers
 
 from ecommerce.drf import views
+from ecommerce.drf.views import (
+    CategoryList,
+    ProductByCategory,
+    ProductInventoryByWebId,
+)
 from ecommerce.search.views import SearchProductInventory
 
 router = routers.DefaultRouter()
@@ -33,6 +38,12 @@ router.register(
     views.ProductByCategory,
     basename="productbycategory",
 )
+router.register(
+    r"api/inventory/products/category/(?P<slug>[^/.]+)",
+    views.ProductByCategory,
+    basename="productsbycategory",
+)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -40,4 +51,9 @@ urlpatterns = [
     path("", include(router.urls)),
     path("search/<str:query>/", SearchProductInventory.as_view()),
     path("ninja/", include("ecommerce.dninja.urls")),
+    path("api/inventory/category/all/", CategoryList.as_view()),
+    path(
+        "api/inventory/<int:query>/",
+        ProductInventoryByWebId.as_view(),
+    ),
 ]

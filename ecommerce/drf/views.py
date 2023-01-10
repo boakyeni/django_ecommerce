@@ -1,10 +1,23 @@
 from ecommerce.drf.serializer import (
     AllProductSerializer,
+    CategorySerializer,
     ProductInventorySerializer,
 )
-from ecommerce.inventory.models import Product, ProductInventory
+from ecommerce.inventory.models import Category, Product, ProductInventory
 from rest_framework import mixins, permissions, viewsets
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+class CategoryList(APIView):
+    """
+    Return list of all categories
+    """
+
+    def get(self, request):
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class AllProductViewset(
@@ -52,4 +65,15 @@ class ProductInventoryViewset(viewsets.GenericViewSet, mixins.ListModelMixin):
             queryset, context={"request": request}, many=True
         )
 
+        return Response(serializer.data)
+
+
+class ProductInventoryByWebId(APIView):
+    """
+    Return Sub Product by WebId
+    """
+
+    def get(self, request, query=None):
+        queryset = ProductInventory.objects.filter(product__web_id=query)
+        serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)
