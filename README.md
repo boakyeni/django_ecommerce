@@ -12,6 +12,9 @@ At this point the file is proper json, however not formatted for django. To form
    * finally the ending curly bracket shouldbe doubled, so add an extra <}> before the final closing square bracket
  A script automating this is coming soon.
 
+Running commands with Docker example:
+`docker-compose exec web python manage.py load-fixtures`
+
 
 
 ### Setup
@@ -22,6 +25,8 @@ Start virtual enviroment
 
 To get test database\
 `python3 manage.py load-fixtures`
+
+
 
 
 

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+from elasticsearch import RequestsHttpConnection
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     "ecommerce.demo",
     "ecommerce.search",
     "ecommerce.dninja",
+    "ecommerce.promotion",
     # External applications
     "mptt",
     "rest_framework",
@@ -146,7 +149,14 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ELASTICSEARCH_DSL = {"default": {"hosts": "localhost:9200"}}
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": "elasticsearch_ecommerce",
+    }
+}
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 
 REST_FRAMEWORK = {
